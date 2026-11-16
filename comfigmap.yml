@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+  namespace: 
+data:
+  PORT: "8080"
+  APP_ENV: production
+  STORE_NAME: "DevScale Store"
+  PROMO_BANNER: "Free delivery on orders over $500"
+  CURRENCY_SYMBOL: "$"
+  SESSION_TTL_MINUTES: 60
+  
+  
+  

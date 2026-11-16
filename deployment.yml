@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8secommerce
+  namespace:
+spec:
+  selector:
+    matchLabels:
+      app: k8secommerce
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: devscale-ecommerce
+    spec:
+      containers:
+      - name: devscale-ecommerce
+        image:xxxxxxx:v2
+        ports:
+        - containerPort: 8080
+        - targetPort: 8080
+        envFrom:
+          - configMapRef:
+            name: my-configmap
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - name: liveness-port
+          containerPort: 8080
+
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: liveness-port
+          failureThreshold: 1
+          periodSeconds: 10
+          initialDelaySeconds:
+
+        readinessProbe:
+          httpGet:
+          
+          path: /healthz
+    port: liveness-port
+  failureThreshold: 30
+  periodSeconds: 10
